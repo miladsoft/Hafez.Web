@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Hafez.Web
@@ -14,6 +15,9 @@ namespace Hafez.Web
        
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<HafezDbContext>(options =>
+              options.UseSqlite("Data Source=data.sqlite"));
+
             services.AddMvc();
         }
 
