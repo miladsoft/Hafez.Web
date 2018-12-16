@@ -5,23 +5,34 @@
 
 <!DOCTYPE html>
 
-<html>
+<html >
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>فال حافظ</title>
     <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link href="~/lib/twitter-bootstrap/rtl/bootstrap-rtl.css" rel="stylesheet" />
 </head>
-<body>
+<body style="background-color:rebeccapurple;background-origin:border-box">
 
-    <div class="container rtl" id="app">
+    <div class="container rtl text-center" id="app" >
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4 text-light">
+                <br />
+                <br />
+                <h1>فال حافظ</h1>
+                <br />
+                <button class="btn btn-primary btn-block" v-on:click="sendMessage">
+                    فالم بگیر
+                </button>
+                <br />
+                <p>{{mesra[0]}}</p>
+                <p>{{mesra[1]}}</p>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
 
-        <h1>خوش آمدید</h1>
-        <button class="btn btn-primary" v-on:click="sendMessage">
-            فال من
-        </button>
-        <p>{{mesra[0]}} </p>
-        <p>{{mesra[1]}}</p>
+   
 
 
     </div>
