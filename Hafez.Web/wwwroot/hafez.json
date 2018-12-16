@@ -1,23 +1,5 @@
 {
-    "type": "table",
-    "database": null,
-    "name": "fal",
-    "withoutRowId": true,
-    "ddl": "CREATE TABLE `fal` (`id`, `beit`, `ghazal`);",
-    "columns": [
-        {
-            "name": "id",
-            "type": ""
-        },
-        {
-            "name": "beit",
-            "type": ""
-        },
-        {
-            "name": "ghazal",
-            "type": ""
-        }
-    ],
+
     "rows": [
         [
             "4",

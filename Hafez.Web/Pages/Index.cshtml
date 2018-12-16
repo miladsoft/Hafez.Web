@@ -8,13 +8,65 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <title>فال حافظ</title>
     <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/twitter-bootstrap/rtl/bootstrap-rtl.css" rel="stylesheet" />
 </head>
 <body>
 
+    <div class="container rtl" id="app">
 
+        <h1>خوش آمدید</h1>
+        <button class="btn btn-primary" v-on:click="sendMessage">
+            فال من
+        </button>
+        {{message}}
+
+
+    </div>
+    <script src="~/lib/jquery/jquery.js"></script>
     <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/vue/vue.js"></script>
+    <script src="~/hafez.json" type="text/javascript" ></script>
+    <script>
+
+        function generateRandomNumber(min, max) {
+
+            let random_number = Math.random() * (max - min) + min;
+
+            return Math.floor(random_number);
+
+        }
+
+        var app = new Vue({
+            el: "#app",
+            data: {
+                message: ""
+            },
+            created: function () {
+                this.getData();
+            },
+            methods: {
+                sendMessage: function () {
+                    var divan = JSON.parse(hafez);
+                    var fal = generateRandomNumber(1, 3406);
+                    this.message = divan.rows[fal];
+                },
+                getData: function () {
+                    var vm = this;
+                    $.ajax({ url: "/api/provinces.json", method: "GET" })
+                        .done(function (data) {
+                            vm.provinces = data;
+                        });
+                    $.ajax({ url: "/api/cities.json", method: "GET" })
+                        .done(function (data) {
+                            vm.cities = data;
+                        });
+                }
+            }
+        });
+
+    </script>
 
 </body>
 </html>
