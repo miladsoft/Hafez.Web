@@ -20,7 +20,8 @@
         <button class="btn btn-primary" v-on:click="sendMessage">
             فال من
         </button>
-        {{message}}
+        <p>{{mesra[0]}} </p>
+        <p>{{mesra[1]}}</p>
 
 
     </div>
@@ -32,8 +33,7 @@
 
         function generateRandomNumber(min, max) {
 
-            let random_number = Math.random() * (max - min) + min;
-
+            var random_number = Math.random() * (max - min) + min;
             return Math.floor(random_number);
 
         }
@@ -41,27 +41,32 @@
         var app = new Vue({
             el: "#app",
             data: {
-                message: ""
+                message: "",
+                mesra:["",""],
+                shers:[]
             },
             created: function () {
                 this.getData();
             },
             methods: {
                 sendMessage: function () {
-                    var divan = JSON.parse(hafez);
-                    var fal = generateRandomNumber(1, 3406);
-                    this.message = divan.rows[fal];
+                    //var divan = JSON.parse(hafez);
+                    var num = generateRandomNumber(1, 3406);
+                    var found = this.shers.find(function (element) {
+                        return element.id == num;
+                    });
+
+                    this.message = found.beit;
+                    this.mesra = this.message.split('*');
+
                 },
                 getData: function () {
                     var vm = this;
-                    $.ajax({ url: "/api/provinces.json", method: "GET" })
+                    $.ajax({ url: "/hafez.json", method: "GET" })
                         .done(function (data) {
-                            vm.provinces = data;
+                            vm.shers = data;
                         });
-                    $.ajax({ url: "/api/cities.json", method: "GET" })
-                        .done(function (data) {
-                            vm.cities = data;
-                        });
+                    
                 }
             }
         });
