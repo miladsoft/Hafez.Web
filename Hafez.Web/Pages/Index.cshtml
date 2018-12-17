@@ -12,16 +12,7 @@
     <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link href="~/lib/twitter-bootstrap/rtl/bootstrap-rtl.css" rel="stylesheet" />
     <link href="~/lib/vue-animate/vue2-animate.css" rel="stylesheet" />
-    @*<link href="~/lib/animate.css/animate.css" rel="stylesheet" />*@
-    @*<style>
-            .fade-enter-active, .fade-leave-active {
-                transition: opacity 0.25s ease-out;
-            }
 
-            .fade-enter, .fade-leave-to {
-                opacity: 0;
-            }
-        </style>*@
 </head>
 <body style="background-color:white;background-origin:border-box">
 
@@ -32,7 +23,7 @@
                 <br />
                 <img src="~/hafez.png" />
                 <br />
-                @*<button v-on:click="show=!show" class="btn btn-block btn-light">Show</button>*@
+
                 <transition name="rotate">
                     <img v-show="show" v-bind:src="srcImage" v-on:click="sendMessage" v-on:mousedown="srcImage=butttonShadowImage" v-on:mouseup="srcImage=butttonImage" />
                 </transition>
@@ -98,18 +89,12 @@
 
             },
             methods: {
-                //changeButton: function () {
-                //    if (this.srcImage == this.butttonImage) {
-                //        this.srcImage = this.butttonShadowImage
-                //    } else {
-                //        this.srcImage == this.butttonImage
-                //    }
-                //},
+
                 sendMessage: function () {
-                    //this.show = !this.show;
-                    this.srcImage = this.butttonShadowImage
+
+                    this.srcImage = this.butttonImage;
                     this.showMes = !this.showMes;
-                    //var divan = JSON.parse(hafez);
+
                     if (this.showMes == true) {
                         
                         var num = generateRandomNumber(1, 3406);
@@ -120,7 +105,8 @@
                         this.message = found.beit;
                         this.mesra = this.message.split('*');
                         this.showMes = true;
-                        this.srcImage == this.butttonImage
+                        
+                        this.srcImage = this.butttonShadowImage
                     }
                 
                     
