@@ -30,19 +30,32 @@
             <div class="col-sm-4"></div>
             <div class="col-sm-4 text-dark">
                 <br />
+                <img src="~/hafez.png" />
                 <br />
                 @*<button v-on:click="show=!show" class="btn btn-block btn-light">Show</button>*@
                 <transition name="rotate">
-                    <img v-show="show" src="~/button.png" v-on:click="sendMessage" />
+                    <img v-show="show" v-bind:src="srcImage" v-on:click="sendMessage" v-on:mousedown="srcImage=butttonShadowImage" v-on:mouseup="srcImage=butttonImage" />
                 </transition>
-                               
+
                 <br />
-                <transition name="bounce">
-                    <div v-if="showMes">
+                <transition name="fadeUp">
+                    <div v-if="showMes" v-on:click="hideMessage">
+                     
                         <p>{{mesra[0]}}</p>
+                    </div>
+                </transition>
+                <transition name="fadeDown">
+                    <div v-if="showMes" v-on:click="hideMessage">
+           
                         <p>{{mesra[1]}}</p>
                     </div>
                 </transition>
+
+                <br />
+                <br />
+                <p class="text-muted">
+                    <a href="https://codehaks.com" class="btn btn-block btn-light">codehaks.com</a>
+                </p>
             </div>
             <div class="col-sm-4"></div>
         </div>
@@ -71,32 +84,54 @@
                 mesra: ["", ""],
                 shers: [],
                 show: false,
-                showMes:false
+                showMes: false,
+                butttonImage: "/button.png",
+                butttonShadowImage: "/button-noshadow.png",
+                srcImage:""
             },
             created: function () {
                 this.getData();
-
+                this.srcImage = this.butttonImage;
             },
             mounted: function () {
                 this.show = true;
 
             },
             methods: {
+                //changeButton: function () {
+                //    if (this.srcImage == this.butttonImage) {
+                //        this.srcImage = this.butttonShadowImage
+                //    } else {
+                //        this.srcImage == this.butttonImage
+                //    }
+                //},
                 sendMessage: function () {
-                    this.showMes = false;
+                    //this.show = !this.show;
+                    this.srcImage = this.butttonShadowImage
+                    this.showMes = !this.showMes;
                     //var divan = JSON.parse(hafez);
-                    var num = generateRandomNumber(1, 3406);
-                    var found = this.shers.find(function (element) {
-                        return element.id == num;
-                    });
+                    if (this.showMes == true) {
+                        
+                        var num = generateRandomNumber(1, 3406);
+                        var found = this.shers.find(function (element) {
+                            return element.id == num;
+                        });
 
-                    this.message = found.beit;
-                    this.mesra = this.message.split('*');
-                    this.showMes = true;
+                        this.message = found.beit;
+                        this.mesra = this.message.split('*');
+                        this.showMes = true;
+                        this.srcImage == this.butttonImage
+                    }
+                
+                    
+
+
+                },
+                hideMessage: function () {
                     var vm = this;
-                    setTimeout(function () {
-                        vm.showMes = false;}
-                        , 3000)
+
+                    vm.showMes = false;
+                    vm.show = true;
 
                 },
                 getData: function () {
