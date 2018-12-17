@@ -5,41 +5,56 @@
 
 <!DOCTYPE html>
 
-<html >
+<html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>فال حافظ</title>
     <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link href="~/lib/twitter-bootstrap/rtl/bootstrap-rtl.css" rel="stylesheet" />
-</head>
-<body style="background-color:rebeccapurple;background-origin:border-box">
+    <link href="~/lib/vue-animate/vue2-animate.css" rel="stylesheet" />
+    @*<link href="~/lib/animate.css/animate.css" rel="stylesheet" />*@
+    @*<style>
+            .fade-enter-active, .fade-leave-active {
+                transition: opacity 0.25s ease-out;
+            }
 
-    <div class="container rtl text-center" id="app" >
+            .fade-enter, .fade-leave-to {
+                opacity: 0;
+            }
+        </style>*@
+</head>
+<body style="background-color:white;background-origin:border-box">
+
+    <div class="container rtl text-center" id="app">
         <div class="row">
             <div class="col-sm-4"></div>
-            <div class="col-sm-4 text-light">
+            <div class="col-sm-4 text-dark">
                 <br />
                 <br />
-                <h1>فال حافظ</h1>
+                @*<button v-on:click="show=!show" class="btn btn-block btn-light">Show</button>*@
+                <transition name="rotate">
+                    <img v-show="show" src="~/button.png" v-on:click="sendMessage" />
+                </transition>
+                               
                 <br />
-                <button class="btn btn-primary btn-block" v-on:click="sendMessage">
-                    فالم بگیر
-                </button>
-                <br />
-                <p>{{mesra[0]}}</p>
-                <p>{{mesra[1]}}</p>
+                <transition name="bounce">
+                    <div v-if="showMes">
+                        <p>{{mesra[0]}}</p>
+                        <p>{{mesra[1]}}</p>
+                    </div>
+                </transition>
             </div>
             <div class="col-sm-4"></div>
         </div>
 
-   
+
 
 
     </div>
     <script src="~/lib/jquery/jquery.js"></script>
     <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
     <script src="~/lib/vue/vue.js"></script>
-    <script src="~/hafez.json" type="text/javascript" ></script>
+    <script src="~/hafez.json" type="text/javascript"></script>
     <script>
 
         function generateRandomNumber(min, max) {
@@ -53,14 +68,22 @@
             el: "#app",
             data: {
                 message: "",
-                mesra:["",""],
-                shers:[]
+                mesra: ["", ""],
+                shers: [],
+                show: false,
+                showMes:false
             },
             created: function () {
                 this.getData();
+
+            },
+            mounted: function () {
+                this.show = true;
+
             },
             methods: {
                 sendMessage: function () {
+                    this.showMes = false;
                     //var divan = JSON.parse(hafez);
                     var num = generateRandomNumber(1, 3406);
                     var found = this.shers.find(function (element) {
@@ -69,6 +92,11 @@
 
                     this.message = found.beit;
                     this.mesra = this.message.split('*');
+                    this.showMes = true;
+                    var vm = this;
+                    setTimeout(function () {
+                        vm.showMes = false;}
+                        , 3000)
 
                 },
                 getData: function () {
@@ -77,7 +105,7 @@
                         .done(function (data) {
                             vm.shers = data;
                         });
-                    
+
                 }
             }
         });

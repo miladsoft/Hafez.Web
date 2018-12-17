@@ -13,6 +13,10 @@
     {
       "library": "vue@2.5.21",
       "destination": "wwwroot/lib/vue/"
+    },
+    {
+      "library": "animate.css@3.7.0",
+      "destination": "wwwroot/lib/animate.css/"
     }
   ]
 }
