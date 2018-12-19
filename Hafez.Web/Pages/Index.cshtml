@@ -1,10 +1,8 @@
-﻿@page 
+﻿@page
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -14,6 +12,9 @@
     <link href="~/hafez/lib/vue-animate/vue2-animate.css" rel="stylesheet" />
     <link rel="manifest" href="/hafez/manifest.json">
     <style>
+        [v-cloak] {
+            display: none;
+        }
         .footer {
             position: absolute;
             bottom: 100px;
@@ -24,53 +25,38 @@
             right: 0;
         }
     </style>
-
 </head>
 <body style="background-color:white;background-origin:border-box">
-
     <div class="container rtl text-center" id="app">
         <div class="row">
-
             <div class="col text-dark">
                 <br />
                 <div class="row align-items-start">
                     <div class="col">
-
                         <img src="~/hafez/hafez.png" />
-
                     </div>
                 </div>
                 <div class="row align-items-center">
                     <div class="col">
                         <transition name="fadeUp">
                             <div v-if="showMes" v-on:click="hideMessage">
-
-                                <p style="font-size:4vw;">{{mesra[0]}}</p>
+                                <p style="font-size:4vw;" v-cloak>{{mesra[0]}}</p>
                             </div>
-
                         </transition>
                         <transition name="fadeDown">
                             <div v-if="showMes" v-on:click="hideMessage">
-
-                                <p style="font-size:4vw;">{{mesra[1]}}</p>
+                                <p style="font-size:4vw;" v-cloak>{{mesra[1]}}</p>
                             </div>
-
                         </transition>
                     </div>
                 </div>
             </div>
         </div>
-
         <footer class="footer">
             <transition name="rotate">
                 <img v-show="show" v-bind:src="srcImage" v-on:click="sendMessage" v-on:mousedown="srcImage=butttonShadowImage" v-on:mouseup="srcImage=butttonImage" />
             </transition>
-
-            <p class="text-muted">
-                <a href="https://codehaks.com" class="btn btn-block btn-default" style="color:blueviolet">کاری از کدهک</a>
-            </p>
         </footer>
-
     </div>
     <script src="~/hafez/lib/jquery/jquery.js"></script>
     <script src="~/hafez/lib/twitter-bootstrap/js/bootstrap.js"></script>
@@ -82,7 +68,6 @@
                 console.log('SW not supported!');
                 return;
             }
-
             navigator.serviceWorker.register('/sworker.js').then(
                 () => {
                     console.log('SW registered!');
@@ -94,14 +79,10 @@
         });
     </script>
     <script>
-
         function generateRandomNumber(min, max) {
-
             var random_number = Math.random() * (max - min) + min;
             return Math.floor(random_number);
-
         }
-
         var app = new Vue({
             el: "#app",
             data: {
@@ -120,39 +101,26 @@
             },
             mounted: function () {
                 this.show = true;
-
             },
             methods: {
-
                 sendMessage: function () {
-
                     this.srcImage = this.butttonImage;
                     this.showMes = !this.showMes;
-
                     if (this.showMes == true) {
-
                         var num = generateRandomNumber(1, 3406);
                         var found = this.shers.find(function (element) {
                             return element.id == num;
                         });
-
                         this.message = found.beit;
                         this.mesra = this.message.split('*');
                         this.showMes = true;
-
                         this.srcImage = this.butttonShadowImage
                     }
-
-
-
-
-                },
+               },
                 hideMessage: function () {
                     var vm = this;
-
                     vm.showMes = false;
                     vm.show = true;
-
                 },
                 getData: function () {
                     var vm = this;
@@ -160,12 +128,9 @@
                         .done(function (data) {
                             vm.shers = data;
                         });
-
                 }
             }
         });
-
     </script>
-
 </body>
 </html>
