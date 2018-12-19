@@ -1,4 +1,4 @@
-﻿@page
+﻿@page 
 @{
     Layout = null;
 }
@@ -9,56 +9,90 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>فال حافظ</title>
-    <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/lib/twitter-bootstrap/rtl/bootstrap-rtl.css" rel="stylesheet" />
-    <link href="~/lib/vue-animate/vue2-animate.css" rel="stylesheet" />
+    <link href="~/hafez/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/hafez/lib/twitter-bootstrap/rtl/bootstrap-rtl.css" rel="stylesheet" />
+    <link href="~/hafez/lib/vue-animate/vue2-animate.css" rel="stylesheet" />
+    <link rel="manifest" href="/hafez/manifest.json">
+    <style>
+        .footer {
+            position: absolute;
+            bottom: 100px;
+            width: 100%;
+            height: 200px;
+            line-height: 200px;
+            left: 0;
+            right: 0;
+        }
+    </style>
 
 </head>
 <body style="background-color:white;background-origin:border-box">
 
     <div class="container rtl text-center" id="app">
         <div class="row">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4 text-dark">
-                <br />
-                <img src="~/hafez.png" />
-                <br />
 
-                <transition name="rotate">
-                    <img v-show="show" v-bind:src="srcImage" v-on:click="sendMessage" v-on:mousedown="srcImage=butttonShadowImage" v-on:mouseup="srcImage=butttonImage" />
-                </transition>
-
+            <div class="col text-dark">
                 <br />
-                <transition name="fadeUp">
-                    <div v-if="showMes" v-on:click="hideMessage">
-                     
-                        <p>{{mesra[0]}}</p>
+                <div class="row align-items-start">
+                    <div class="col">
+
+                        <img src="~/hafez/hafez.png" />
+
                     </div>
-                </transition>
-                <transition name="fadeDown">
-                    <div v-if="showMes" v-on:click="hideMessage">
-           
-                        <p>{{mesra[1]}}</p>
-                    </div>
-                </transition>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col">
+                        <transition name="fadeUp">
+                            <div v-if="showMes" v-on:click="hideMessage">
 
-                <br />
-                <br />
-                <p class="text-muted">
-                    <a href="https://codehaks.com" class="btn btn-block btn-light">codehaks.com</a>
-                </p>
+                                <p style="font-size:4vw;">{{mesra[0]}}</p>
+                            </div>
+
+                        </transition>
+                        <transition name="fadeDown">
+                            <div v-if="showMes" v-on:click="hideMessage">
+
+                                <p style="font-size:4vw;">{{mesra[1]}}</p>
+                            </div>
+
+                        </transition>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-4"></div>
         </div>
 
+        <footer class="footer">
+            <transition name="rotate">
+                <img v-show="show" v-bind:src="srcImage" v-on:click="sendMessage" v-on:mousedown="srcImage=butttonShadowImage" v-on:mouseup="srcImage=butttonImage" />
+            </transition>
 
-
+            <p class="text-muted">
+                <a href="https://codehaks.com" class="btn btn-block btn-default" style="color:blueviolet">کاری از کدهک</a>
+            </p>
+        </footer>
 
     </div>
-    <script src="~/lib/jquery/jquery.js"></script>
-    <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
-    <script src="~/lib/vue/vue.js"></script>
-    <script src="~/hafez.json" type="text/javascript"></script>
+    <script src="~/hafez/lib/jquery/jquery.js"></script>
+    <script src="~/hafez/lib/twitter-bootstrap/js/bootstrap.js"></script>
+    <script src="~/hafez/lib/vue/vue.js"></script>
+    <script src="~/hafez/hafez.json" type="text/javascript"></script>
+    <script>
+        window.addEventListener('load', () => {
+            if (!('serviceWorker' in navigator)) {
+                console.log('SW not supported!');
+                return;
+            }
+
+            navigator.serviceWorker.register('/sworker.js').then(
+                () => {
+                    console.log('SW registered!');
+                },
+                err => {
+                    console.error('SW registration failed!', err);
+                }
+            );
+        });
+    </script>
     <script>
 
         function generateRandomNumber(min, max) {
@@ -76,9 +110,9 @@
                 shers: [],
                 show: false,
                 showMes: false,
-                butttonImage: "/button.png",
-                butttonShadowImage: "/button-noshadow.png",
-                srcImage:""
+                butttonImage: "/hafez/button.png",
+                butttonShadowImage: "/hafez/button-noshadow.png",
+                srcImage: ""
             },
             created: function () {
                 this.getData();
@@ -96,7 +130,7 @@
                     this.showMes = !this.showMes;
 
                     if (this.showMes == true) {
-                        
+
                         var num = generateRandomNumber(1, 3406);
                         var found = this.shers.find(function (element) {
                             return element.id == num;
@@ -105,11 +139,11 @@
                         this.message = found.beit;
                         this.mesra = this.message.split('*');
                         this.showMes = true;
-                        
+
                         this.srcImage = this.butttonShadowImage
                     }
-                
-                    
+
+
 
 
                 },
@@ -122,7 +156,7 @@
                 },
                 getData: function () {
                     var vm = this;
-                    $.ajax({ url: "/hafez.json", method: "GET" })
+                    $.ajax({ url: "/hafez/hafez.json", method: "GET" })
                         .done(function (data) {
                             vm.shers = data;
                         });
